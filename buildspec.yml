@@ -82,4 +82,3 @@ reports:
     files:
       - packaged.yaml
     discard-paths: yes
-    name: PackagedTemplate
