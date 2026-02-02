@@ -55,7 +55,7 @@ phases:
       - echo "Running tests (optional)..."
       - test -f src-test/s3-logs-handler.js && (echo "Found test file..." && cd src-test && npm test && cd ..) || echo "No test files found - skipping tests"
       - echo "Building SAM application..."
-      - sam build --template sam-template.yaml --use-container
+      - sam build --template sam-template.yaml
       - echo "✓ SAM build completed"
       - echo "Checking build output..."
       - ls -la .aws-sam/build/ 2>&1 || echo "Build directory not found"
