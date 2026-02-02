@@ -60,8 +60,10 @@ phases:
       - echo "=== POST-BUILD PHASE ==="
       - echo "Current directory $(pwd) and checking SAM template..."
       - test -f .aws-sam/build/template.yaml && echo "✓ SAM template found" || (echo "✗ ERROR template not found" && exit 1)
+      - echo "Template content:"
+      - cat .aws-sam/build/template.yaml
       - echo "Packaging SAM application..."
-      - sam package --template-file .aws-sam/build/template.yaml --s3-bucket ${S3_BUCKET} --s3-prefix "builds/$(date +%Y%m%d-%H%M%S)" --region ${AWS_REGION} --output-template-file packaged.yaml 2>&1 || (echo "SAM package failed, showing template content:" && cat .aws-sam/build/template.yaml && exit 1)
+      - sam package --template-file .aws-sam/build/template.yaml --s3-bucket ${S3_BUCKET} --s3-prefix "builds/$(date +%Y%m%d-%H%M%S)" --region ${AWS_REGION} --output-template-file packaged.yaml
       - echo "✓ SAM package completed"
       - test -f packaged.yaml && echo "✓ packaged.yaml created successfully" || (echo "✗ ERROR packaged.yaml NOT created" && exit 1)
       - echo "Checking packaged.yaml location..."
