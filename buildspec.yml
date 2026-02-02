@@ -9,7 +9,7 @@ env:
     # AWS Region
     AWS_REGION: ap-south-1
     # S3 bucket for packaged artifacts
-    S3_BUCKET: webproject-sam-deployments-851189
+    S3_BUCKET: codepipelinestartertempla-codepipelineartifactsbuc-msedclmawtv1
     # Project name
     PROJECT_NAME: webproject
     # CloudFormation stack name
