@@ -40,28 +40,14 @@ phases:
       - sam validate --template sam-template.yaml --region ${AWS_REGION}
       - echo "✓ SAM template validation passed"
       - echo "Installing Lambda function dependencies..."
-      - |
-        if [ -f lambda/requirements.txt ]; then
-          echo "Found Python requirements.txt"
-          pip install -r lambda/requirements.txt -t lambda/
-        fi
-      - |
-        if [ -f lambda/package.json ]; then
-          echo "Found Node.js package.json"
-          cd lambda && npm install && cd ..
-        fi
+      - test -f lambda/requirements.txt && (echo "Found Python requirements.txt" && pip install -r lambda/requirements.txt -t lambda/) || echo "No requirements.txt found"
+      - test -f lambda/package.json && (echo "Found Node.js package.json" && cd lambda && npm install && cd ..) || echo "No package.json found"
   
   build:
     commands:
       - echo "=== BUILD PHASE ==="
       - echo "Running tests (optional)..."
-      - |
-        if [ -f tests/test.js ]; then
-          echo "Running JavaScript tests..."
-          npm test
-        else
-          echo "No test files found - skipping tests"
-        fi
+      - test -f tests/test.js && (echo "Running JavaScript tests..." && npm test) || echo "No test files found - skipping tests"
       - echo "Building SAM application..."
       - sam build --template sam-template.yaml --use-container
       - echo "✓ SAM build completed"
@@ -78,12 +64,15 @@ phases:
       - sam package --template-file .aws-sam/build/template.yaml --s3-bucket ${S3_BUCKET} --s3-prefix "builds/$(date +%Y%m%d-%H%M%S)" --region ${AWS_REGION} --output-template-file packaged.yaml
       - echo "✓ SAM package completed"
       - test -f packaged.yaml && echo "✓ packaged.yaml created successfully" || (echo "✗ ERROR packaged.yaml NOT created" && exit 1)
+      - echo "Checking packaged.yaml location..."
+      - ls -la packaged.yaml
+      - pwd
 
 artifacts:
   name: SAMPackageArtifacts
   files:
     - packaged.yaml
-  discard-paths: yes
+  name: PackagedTemplate
 
 cache:
   paths:
