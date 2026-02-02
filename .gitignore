@@ -1,0 +1,18 @@
+# SAM build artifacts
+.aws-sam/
+
+# Node modules
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
