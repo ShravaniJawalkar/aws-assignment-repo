@@ -69,10 +69,9 @@ phases:
       - pwd
 
 artifacts:
-  name: SAMPackageArtifacts
+  name: PackagedTemplate
   files:
     - packaged.yaml
-  name: PackagedTemplate
 
 cache:
   paths:
