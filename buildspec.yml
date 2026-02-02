@@ -14,9 +14,6 @@ env:
     PROJECT_NAME: webproject
     # CloudFormation stack name
     STACK_NAME: webproject-uploads-stack
-  parameter-store:
-    # Optional: Store sensitive values in Parameter Store
-    # GITHUB_TOKEN: /github/token
 
 phases:
   install:
