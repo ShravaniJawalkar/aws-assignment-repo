@@ -1,0 +1,9 @@
+{
+  "name": "uploads-notification-function",
+  "version": "1.0.0",
+  "description": "Lambda function for handling upload notifications via SQS and SNS",
+  "main": "index.js",
+  "dependencies": {
+    "aws-sdk": "^2.0.0"
+  }
+}
