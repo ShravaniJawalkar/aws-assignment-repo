@@ -40,14 +40,14 @@ phases:
       - sam validate --template sam-template.yaml --region ${AWS_REGION}
       - echo "✓ SAM template validation passed"
       - echo "Installing Lambda function dependencies..."
-      - test -f lambda/requirements.txt && (echo "Found Python requirements.txt" && pip install -r lambda/requirements.txt -t lambda/) || echo "No requirements.txt found"
-      - test -f lambda/package.json && (echo "Found Node.js package.json" && cd lambda && npm install && cd ..) || echo "No package.json found"
+      - test -f src/package.json && (echo "Found Node.js package.json in src/" && cd src && npm install && cd ..) || echo "No package.json found in src/"
+      - test -f src-test/package.json && (echo "Found Node.js package.json in src-test/" && cd src-test && npm install && cd ..) || echo "No package.json found in src-test/"
   
   build:
     commands:
       - echo "=== BUILD PHASE ==="
       - echo "Running tests (optional)..."
-      - test -f tests/test.js && (echo "Running JavaScript tests..." && npm test) || echo "No test files found - skipping tests"
+      - test -f src-test/s3-logs-handler.js && (echo "Found test file..." && cd src-test && npm test && cd ..) || echo "No test files found - skipping tests"
       - echo "Building SAM application..."
       - sam build --template sam-template.yaml --use-container
       - echo "✓ SAM build completed"
