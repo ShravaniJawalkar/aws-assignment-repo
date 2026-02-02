@@ -18,6 +18,12 @@ env:
 phases:
   install:
     commands:
+      - echo "=== CHECKING DIRECTORY STRUCTURE ==="
+      - pwd
+      - ls -la
+      - if [ -d "../" ] && [ -f "../sam-template.yaml" ]; then cd ..; echo "Moved to parent directory"; fi
+      - echo "Working directory:"
+      - pwd
       - echo "=== INSTALL PHASE ==="
       - echo "Installing AWS SAM CLI and dependencies..."
       - pip install --upgrade pip
