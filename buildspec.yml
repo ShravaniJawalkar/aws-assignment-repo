@@ -85,13 +85,7 @@ phases:
         fi
       - echo "✓ SAM build template found"
       - echo "Packaging SAM application..."
-      - |
-        sam package \
-          --template-file .aws-sam/build/template.yaml \
-          --s3-bucket ${S3_BUCKET} \
-          --s3-prefix "builds/$(date +%Y%m%d-%H%M%S)" \
-          --region ${AWS_REGION} \
-          --output-template-file packaged.yaml 2>&1
+      - sam package --template-file .aws-sam/build/template.yaml --s3-bucket ${S3_BUCKET} --s3-prefix "builds/$(date +%Y%m%d-%H%M%S)" --region ${AWS_REGION} --output-template-file packaged.yaml
       - echo "✓ SAM package completed"
       - echo "Verifying packaged.yaml was created..."
       - |
